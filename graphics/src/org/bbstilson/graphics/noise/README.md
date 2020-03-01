@@ -30,6 +30,8 @@ A collection of noise algorithms
 " target="_blank"><img src="http://img.youtube.com/vi/In6MKsEksfQ/0.jpg" 
 alt="3d Perlin Noise as water video" width="240" height="180" border="10" /></a>
 
+`$DEPTH` images are rendered in parallel and then compiled into a video using QuickTime.
+
 ### Sources
 
 https://flafla2.github.io/2014/08/09/perlinnoise.html
