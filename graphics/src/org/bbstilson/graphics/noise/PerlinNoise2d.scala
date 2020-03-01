@@ -1,8 +1,10 @@
 package org.bbstilson.graphics.noise
 
 import org.bbstilson.graphics._
+import org.bbstilson.graphics.VectorOps._
 
 import java.awt.Color
+import scala.util.Random
 
 object PerlinNoise2d {
 
@@ -12,12 +14,17 @@ object PerlinNoise2d {
 
     new PerlinNoise2d(width, height, 10, 1).generate()
   }
+
+  private val r = Random
+  private val gradients: Vector[Vector2] = Vector((1, 1), (-1, 1), (1, -1), (-1, -1))
+  def randomGradient: Vector2 = gradients(r.nextInt(gradients.size))
 }
 
 class PerlinNoise2d(width: Int, height: Int, cellCountX: Int, cellCountY: Int) {
   require(width % cellCountX == 0, "cellCountX must evenly divide the width.")
   require(height % cellCountY == 0, "cellCountY must evenly divide the height.")
 
+  import PerlinNoise2d._
   import PerlinUtils._
 
   val subPixelValueX = cellCountX.toDouble / width
@@ -27,7 +34,7 @@ class PerlinNoise2d(width: Int, height: Int, cellCountX: Int, cellCountY: Int) {
     for {
       x <- 0 to cellCountX
       y <- 0 to cellCountY
-    } yield Vector2(x, y) -> Vector2.random
+    } yield (x.toDouble, y.toDouble) -> randomGradient
   }.toMap
 
   val img = Image(width, height, Some(s"perlin_noise_2d_${System.currentTimeMillis}"))
@@ -38,10 +45,10 @@ class PerlinNoise2d(width: Int, height: Int, cellCountX: Int, cellCountY: Int) {
     // Convert an integer pixel value to a floating point value that lies in the grid.
     val subX = x * subPixelValueX
     val subY = y * subPixelValueY
-    val subPixelVector = Vector2(subX, subY)
+    val subPixelVector = (subX, subY)
 
-    val minX = subX.toInt
-    val minY = subY.toInt
+    val minX = subX.toInt.toDouble
+    val minY = subY.toInt.toDouble
 
     // Without the use of a fade function (also called an ease curve), the final result would
     // look bad because linear interpolation, while computationally cheap, looks unnatural.
@@ -54,10 +61,10 @@ class PerlinNoise2d(width: Int, height: Int, cellCountX: Int, cellCountY: Int) {
     // Fetch the 2^n closest gradient values, located at the 2^n corners of the grid cell
     // the candidate point falls into.
     val neighbors = List(
-      Vector2(minX, minY),
-      Vector2(minX + 1, minY),
-      Vector2(minX, minY + 1),
-      Vector2(minX + 1, minY + 1)
+      (minX, minY),
+      (minX + 1, minY),
+      (minX, minY + 1),
+      (minX + 1, minY + 1)
     )
     val neighborGradients = neighbors.map(grid)
 

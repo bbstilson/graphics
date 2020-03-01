@@ -1,8 +1,10 @@
 package org.bbstilson.graphics.noise
 
 import org.bbstilson.graphics._
+import org.bbstilson.graphics.VectorOps._
 
 import scala.collection.parallel.CollectionConverters._
+import scala.util.Random
 import java.awt.Color
 
 /**
@@ -11,11 +13,22 @@ import java.awt.Color
 object PerlinNoise3d {
 
   def main(args: Array[String]): Unit = {
-    val dim = 500
-    val grid = 5
+    val dim = 1000
+    val grid = 10
 
     new PerlinNoise3d(dim, dim, 250, grid, grid, grid).generate()
   }
+
+  // format: off
+  private val r = Random
+  private val gradients: Vector[(Double,Double,Double)] = Vector(
+    ( 1,  1,  0), (-1, 1,  0), ( 1, -1,  0),
+    (-1, -1,  0), ( 1, 0,  1), (-1,  0,  1),
+    ( 1,  0, -1), (-1, 0, -1), ( 0,  1,  1),
+    ( 0, -1,  1), ( 0, 1, -1), ( 0, -1, -1)
+  )
+  def randomGradient: Vector3 = gradients(r.nextInt(gradients.size))
+  // format: on
 }
 
 class PerlinNoise3d(
@@ -30,6 +43,7 @@ class PerlinNoise3d(
   require(height % cellCountY == 0, "cellCountY must evenly divide the height.")
   require(depth % cellCountZ == 0, "cellCountZ must evenly divide the depth.")
 
+  import PerlinNoise3d._
   import PerlinUtils._
 
   val subPixelValueX = cellCountX.toDouble / width
@@ -41,7 +55,7 @@ class PerlinNoise3d(
       x <- 0 to cellCountX
       y <- 0 to cellCountY
       z <- 0 to cellCountZ
-    } yield Vector3(x, y, z) -> Vector3.random
+    } yield (x.toDouble, y.toDouble, z.toDouble) -> randomGradient
   }.toMap
 
   def generate(): Unit = (0 until depth).toList.par.foreach { d =>
@@ -55,11 +69,11 @@ class PerlinNoise3d(
     val subY = y * subPixelValueY
     val subZ = z * subPixelValueZ
 
-    val unitPosition = Vector3(subX, subY, subZ)
+    val unitPosition = (subX, subY, subZ)
 
-    val minX = subX.toInt
-    val minY = subY.toInt
-    val minZ = subZ.toInt
+    val minX = subX.toInt.toDouble
+    val minY = subY.toInt.toDouble
+    val minZ = subZ.toInt.toDouble
 
     val unitX = fade(subX - minX)
     val unitY = fade(subY - minY)
@@ -67,14 +81,14 @@ class PerlinNoise3d(
 
     // format: off
     val neighbors = List(
-      Vector3(minX    , minY    , minZ    ), // aaa
-      Vector3(minX    , minY + 1, minZ    ), // aba
-      Vector3(minX    , minY    , minZ + 1), // aab
-      Vector3(minX    , minY + 1, minZ + 1), // abb
-      Vector3(minX + 1, minY    , minZ    ), // baa
-      Vector3(minX + 1, minY + 1, minZ    ), // bba
-      Vector3(minX + 1, minY    , minZ + 1), // bab
-      Vector3(minX + 1, minY + 1, minZ + 1), // bbb
+      (minX    , minY    , minZ    ), // aaa
+      (minX    , minY + 1, minZ    ), // aba
+      (minX    , minY    , minZ + 1), // aab
+      (minX    , minY + 1, minZ + 1), // abb
+      (minX + 1, minY    , minZ    ), // baa
+      (minX + 1, minY + 1, minZ    ), // bba
+      (minX + 1, minY    , minZ + 1), // bab
+      (minX + 1, minY + 1, minZ + 1), // bbb
     )
     // format: on
     val neighborGradients = neighbors.map(grid)
