@@ -2,7 +2,6 @@ package org.bbstilson.graphics.noise
 
 import org.bbstilson.graphics._
 
-import Math._
 import java.awt.Color
 
 object PerlinNoise2d {
@@ -18,6 +17,8 @@ object PerlinNoise2d {
 class PerlinNoise2d(width: Int, height: Int, cellCountX: Int, cellCountY: Int) {
   require(width % cellCountX == 0, "cellCountX must evenly divide the width.")
   require(height % cellCountY == 0, "cellCountY must evenly divide the height.")
+
+  import PerlinUtils._
 
   val subPixelValueX = cellCountX.toDouble / width
   val subPixelValueY = cellCountY.toDouble / height
@@ -37,7 +38,6 @@ class PerlinNoise2d(width: Int, height: Int, cellCountX: Int, cellCountY: Int) {
     // Convert an integer pixel value to a floating point value that lies in the grid.
     val subX = x * subPixelValueX
     val subY = y * subPixelValueY
-
     val subPixelVector = Vector2(subX, subY)
 
     val minX = subX.toInt
@@ -60,9 +60,11 @@ class PerlinNoise2d(width: Int, height: Int, cellCountX: Int, cellCountY: Int) {
       Vector2(minX + 1, minY + 1)
     )
     val neighborGradients = neighbors.map(grid)
+
     // Then, for each gradient value, compute a distance vector defined as the offset
     // vector from each corner node of that cell to the candidate point.
     val unitVectors = neighbors.map(subPixelVector - _)
+
     // After that, compute the dot product between each gradient vector and the distance
     // offset vector.
     val influences = unitVectors
@@ -79,12 +81,4 @@ class PerlinNoise2d(width: Int, height: Int, cellCountX: Int, cellCountY: Int) {
     val c = (((p + 1) / 2) * 255).toInt
     new Color(c, c, c)
   }
-
-  // Fade function as defined by Ken Perlin.  This eases coordinate values
-  // so that they will ease towards integral values.  This ends up smoothing
-  // the final output.
-  def fade(t: Double): Double = t * t * t * (t * (t * 6 - 15) + 10) // 6t^5 - 15t^4 + 10t^3
-
-  // Linear Interpolate
-  def lerp(a: Double, b: Double, x: Double): Double = a + x * (b - a)
 }

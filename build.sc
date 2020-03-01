@@ -6,7 +6,8 @@ object graphics extends ScalaModule {
   def scalacOpts = Seq("-deprecation")
 
   def ivyDeps = Agg(
-    ivy"eu.timepit::refined:0.9.12"
+    ivy"eu.timepit::refined:0.9.12",
+    ivy"org.scala-lang.modules::scala-parallel-collections:0.2.0"
   )
 
   object test extends Tests {
