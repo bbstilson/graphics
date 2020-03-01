@@ -24,6 +24,12 @@ A collection of noise algorithms
 |:---|:---|:---|:---|
 |300|300|10|1|
 
+## 3-dimentional Perlin Noise (youtube video)
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=In6MKsEksfQ
+" target="_blank"><img src="http://img.youtube.com/vi/In6MKsEksfQ/0.jpg" 
+alt="3d Perlin Noise as water video" width="240" height="180" border="10" /></a>
+
 ### Sources
 
 https://flafla2.github.io/2014/08/09/perlinnoise.html
