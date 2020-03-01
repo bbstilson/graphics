@@ -29,7 +29,7 @@ class PerlinNoise2d(width: Int, height: Int, cellCountX: Int, cellCountY: Int) {
     } yield Vector2(x, y) -> Vector2.random
   }.toMap
 
-  val img = Image(width, height, Some(s"perlin_noise_${System.currentTimeMillis}"))
+  val img = Image(width, height, Some(s"perlin_noise_2d_${System.currentTimeMillis}"))
 
   def generate(): Unit = img.generateWith(generator)
 
