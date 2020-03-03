@@ -6,7 +6,7 @@ import java.awt.Color
 object LinearPerlinNoise {
 
   def main(args: Array[String]): Unit = {
-    new LinearPerlinNoise(1000, 250, 10000, 10000, 2000).generate()
+    new LinearPerlinNoise(2000, 500, 10000, 10000, 4000).generate()
   }
 }
 
@@ -18,8 +18,8 @@ class LinearPerlinNoise(
   numPoints: Int
 ) {
   val window = 0.8 * height
-  val perlin2d = new PerlinNoise2d(perlinWidth, perlinHeight, 20, 20)
-  val image = Image(width, height, Some(s"linear_perlin${System.currentTimeMillis()}"))
+  val perlin2d = new PerlinNoise2d(perlinWidth, perlinHeight, 10, 10)
+  val image = Image(width, height, Some(s"linear_perlin_${System.currentTimeMillis()}"))
   val centerX = perlinWidth / 2
   val centerY = perlinHeight / 2
   val radius = Math.floor(Math.min(perlinWidth, perlinHeight) / 2 * 0.75)

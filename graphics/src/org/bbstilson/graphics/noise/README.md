@@ -42,3 +42,8 @@ https://en.wikipedia.org/wiki/Perlin_noise#Algorithm_detail
 
 https://www.youtube.com/watch?v=MJ3bvCkHJtE
 
+## Linear Perlin
+
+![linear perlin 1](./img/linear_perlin_1.jpg)
+
+This was a simple extension of the 2d Perlin Noise generator. First, we generate a 2D Perlin Noise field. Then, rather than calculating what the color is at every pixel in the image, we only calculate pixels that fall on a circle. Next, we convert the color value (0-255) to a y-offset position where 127 is `height / 2` and 255 is 100% of some "window" (so that pixels aren't drawn to the edge of the image). Finally, progress around the circle is converted to progress through the image rectangle, which gives us our X value.
