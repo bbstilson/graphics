@@ -9,10 +9,10 @@ import scala.util.Random
 object PerlinNoise2d {
 
   def main(args: Array[String]): Unit = {
-    val width = 300
-    val height = 300
+    val width = 1000
+    val height = 1000
 
-    new PerlinNoise2d(width, height, 10, 1).generate()
+    new PerlinNoise2d(width, height, 5, 5).generate()
   }
 
   private val r = Random
