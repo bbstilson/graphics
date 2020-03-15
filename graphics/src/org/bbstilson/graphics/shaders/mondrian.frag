@@ -8,6 +8,9 @@ uniform float u_time;
 
 vec3 WHITE = vec3(1.0);
 vec3 BLACK = vec3(0.0);
+vec3 RED = vec3(1.0, 0.0, 0.0);
+vec3 BLUE = vec3(0.0, 0.0, 1.0);
+vec3 YELLOW = vec3(1.0, 1.0, 0.0);
 
 struct Rect {
   float x;
@@ -59,16 +62,12 @@ void main(){
     vec2 st = gl_FragCoord.xy / u_resolution.xy;
     vec3 color = vec3(1.0);
 
-    vec3 red = vec3(1.0, 0.0, 0.0);
-    vec3 blue = vec3(0.0, 0.0, 1.0);
-    vec3 yellow = vec3(1.0, 1.0, 0.0);
-
     float stroke = 0.04;
     DrawRect r1 = DrawRect(Rect(-stroke, 0.7, 0.34, 0.4), stroke, WHITE);
-    DrawRect r2 = DrawRect(Rect(0.26, 0.34, 0.79, 0.7), stroke, red);
+    DrawRect r2 = DrawRect(Rect(0.26, 0.34, 0.79, 0.7), stroke, RED);
     DrawRect r3 = DrawRect(Rect(-stroke, 0.34, 0.34, 0.4), stroke, WHITE);
-    DrawRect r4 = DrawRect(Rect(-stroke, -stroke, 0.34, 0.42), stroke, blue);
-    DrawRect r5 = DrawRect(Rect(0.85, -stroke, 0.2, 0.23), stroke, yellow);
+    DrawRect r4 = DrawRect(Rect(-stroke, -stroke, 0.34, 0.42), stroke, BLUE);
+    DrawRect r5 = DrawRect(Rect(0.85, -stroke, 0.2, 0.23), stroke, YELLOW);
     DrawRect r6 = DrawRect(Rect(0.85, 0.15, 0.2, 0.23), stroke, WHITE);
 
     vec3 dR1 = draw_rect(r1, st);
