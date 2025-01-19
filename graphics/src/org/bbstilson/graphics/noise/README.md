@@ -6,8 +6,8 @@ A collection of noise algorithms
 
 ![random noise](./img/random_noise.jpg)
 
-```
-> mill graphics.runMain --mainClass org.bbstilson.graphics.noise.RandomNoise
+```bash
+./mill graphics.runMain --mainClass org.bbstilson.graphics.noise.RandomNoise
 ```
 
 ## Perlin Noise
@@ -27,20 +27,20 @@ A collection of noise algorithms
 ## 3-dimentional Perlin Noise (youtube video)
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=In6MKsEksfQ
-" target="_blank"><img src="http://img.youtube.com/vi/In6MKsEksfQ/0.jpg" 
+" target="_blank"><img src="http://img.youtube.com/vi/In6MKsEksfQ/0.jpg"
 alt="3d Perlin Noise as water video" width="240" height="180" border="10" /></a>
 
 `$DEPTH` images are rendered in parallel and then compiled into a video using QuickTime.
 
 ### Sources
 
-https://flafla2.github.io/2014/08/09/perlinnoise.html
+<https://flafla2.github.io/2014/08/09/perlinnoise.html>
 
-https://weber.itn.liu.se/~stegu/simplexnoise/simplexnoise.pdf
+<https://weber.itn.liu.se/~stegu/simplexnoise/simplexnoise.pdf>
 
-https://en.wikipedia.org/wiki/Perlin_noise#Algorithm_detail
+<https://en.wikipedia.org/wiki/Perlin_noise#Algorithm_detail>
 
-https://www.youtube.com/watch?v=MJ3bvCkHJtE
+<https://www.youtube.com/watch?v=MJ3bvCkHJtE>
 
 ## Linear Perlin
 
@@ -51,3 +51,12 @@ This was a simple extension of the 2d Perlin Noise generator. First, we generate
 ![moving linear perlin](https://i.imgur.com/bM1xPfq.gif)
 
 The moving version is similar to the static, but rather than using the center of the frame as the center of the circle, each frame's circle-center is determined as a point on a circle in the center of the frame.
+
+```bash
+# uncomment `moving()` in the `main` method
+./mill graphics.runMain org.bbstilson.graphics.noise.LinearPerlinNoise
+
+# This generates a series of jpgs in `~/Desktop/perlin`. `cd` there, then, to convert
+# to an mp4, run:
+ffmpeg -framerate 30 -pattern_type glob -i '*.jpg' -c:v libx264 out.mp4 
+```

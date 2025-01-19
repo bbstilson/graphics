@@ -7,8 +7,7 @@ import scala.collection.parallel.CollectionConverters._
 import scala.util.Random
 import java.awt.Color
 
-/**
-  * Check out PerlinNoise2d for a commented description of the algorithm.
+/** Check out PerlinNoise2d for a commented description of the algorithm.
   */
 object PerlinNoise3d {
 
@@ -32,12 +31,12 @@ object PerlinNoise3d {
 }
 
 class PerlinNoise3d(
-  width: Int,
-  height: Int,
-  depth: Int,
-  cellCountX: Int,
-  cellCountY: Int,
-  cellCountZ: Int
+    width: Int,
+    height: Int,
+    depth: Int,
+    cellCountX: Int,
+    cellCountY: Int,
+    cellCountZ: Int
 ) {
   require(width % cellCountX == 0, "cellCountX must evenly divide the width.")
   require(height % cellCountY == 0, "cellCountY must evenly divide the height.")

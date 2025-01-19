@@ -10,8 +10,7 @@ import java.awt.Color
 import scala.util.Random
 
 object RandomNoise {
-  type ZeroToOne = Positive And LessEqual[W.`1.0`.T]
-
+  type ZeroToOne = Not[Less[0.0]] And Not[Greater[1.0]]
   val r = Random
   val img = Image(300, 300, Some("random_noise"))
 

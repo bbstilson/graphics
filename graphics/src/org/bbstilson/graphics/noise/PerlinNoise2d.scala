@@ -16,7 +16,8 @@ object PerlinNoise2d {
   }
 
   private val r = Random
-  private val gradients: Vector[Vector2] = Vector((1, 1), (-1, 1), (1, -1), (-1, -1))
+  private val gradients: Vector[Vector2] =
+    Vector((1, 1), (-1, 1), (1, -1), (-1, -1))
   def randomGradient: Vector2 = gradients(r.nextInt(gradients.size))
 }
 
@@ -37,7 +38,8 @@ class PerlinNoise2d(width: Int, height: Int, cellCountX: Int, cellCountY: Int) {
     } yield (x.toDouble, y.toDouble) -> randomGradient
   }.toMap
 
-  val img = Image(width, height, Some(s"perlin_noise_2d_${System.currentTimeMillis}"))
+  val img =
+    Image(width, height, Some(s"perlin_noise_2d_${System.currentTimeMillis}"))
 
   def generate(): Unit = img.generateWith(generator)
 
