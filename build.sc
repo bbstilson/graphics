@@ -13,10 +13,9 @@ object graphics extends ScalaModule {
   object test extends ScalaTests {
 
     def ivyDeps = Agg(
-      ivy"org.scalactic::scalactic:3.2.19",
-      ivy"org.scalatest::scalatest:3.2.19"
+      ivy"com.lihaoyi::utest:0.8.4"
     )
 
-    def testFramework = "org.scalatest.tools.Framework"
+    def testFramework = "utest.runner.Framework"
   }
 }
